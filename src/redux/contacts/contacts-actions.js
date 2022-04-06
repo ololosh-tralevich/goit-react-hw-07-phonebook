@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 // import { nanoid } from 'nanoid';
 
 // console.log('re')
+const filter = createAction('contacts/filter');
 
 const fetchRequest = createAction('contacts/fetchRequest');
 const fetchSuccess = createAction('contacts/fetchSuccess');
@@ -16,6 +17,8 @@ const removeSuccess = createAction('contacts/removeSuccess');
 const removeError = createAction('contacts/removeError');
 
 const actions = {
+  filter,
+
   fetchRequest,
   fetchSuccess,
   fetchError,

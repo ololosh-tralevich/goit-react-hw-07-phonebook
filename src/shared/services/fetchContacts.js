@@ -10,17 +10,22 @@ const getContacts = async () => {
   return data;
 };
 
-const addContacts = async (data) => {
+const addContact = async (data) => {
+  console.log('ADD:', data)
   const {data: result} = await instance.post('/contacts', data);
-  console.log('ADD:', result)
   return result;
 }
 
-
+const removeContact = async (contactId) => {
+  const {data: result} = await instance.delete(`/contacts/${contactId}`)
+  console.log('REMOVE:', result)
+  return result;
+ }
 
 const services = {
     getContacts,
-    addContacts,
+    addContact,
+    removeContact
 }
 
 export default services;

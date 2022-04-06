@@ -2,7 +2,6 @@ import actions from './contacts-actions';
 import services from '../../shared/services/fetchContacts';
 
 const fetchContacts = () => {
-    // console.log('detch')
   const func = async dispatch => {
     dispatch(actions.fetchRequest());
     try {
@@ -15,23 +14,45 @@ const fetchContacts = () => {
   return func;
 };
 
-const addContacts = (contacts) => {
-  const func = async dispatch => {
+const addContact = contactData => {
+  const func = async (dispatch, getState) => {
+    const { contacts } = getState();
+    const { name, phone } = contactData;
+    const clone = contacts.contacts.find(
+      clone => clone.name === name || clone.phone === phone
+    );
+    if (clone) {
+      return alert(`${name} is already in your contacts`);
+    }
+
     dispatch(actions.addRequest());
     try {
-      const result = await services.addContacts(contacts);
-      dispatch(actions.addSuccess(result));
+      const newContact = await services.addContact(contactData);
+      dispatch(actions.addSuccess(newContact));
     } catch (error) {
-      dispatch(actions.addError(error))
+      dispatch(actions.addError(error));
     }
-  }
+  };
   return func;
-}
+};
 
+const removeContact = contactId => {
+  const func = async dispatch => {
+    dispatch(actions.removeRequest());
+    try {
+      await services.removeContact(contactId);
+      dispatch(actions.removeSuccess(contactId));
+    } catch (error) {
+      dispatch(actions.removeError(error));
+    }
+  };
+  return func;
+};
 
 const operations = {
-    fetchContacts,
-    addContacts
-}
+  fetchContacts,
+  addContact,
+  removeContact,
+};
 
-export default operations
+export default operations;
