@@ -1,8 +1,13 @@
+import { useSelector, shallowEqual } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
 import styles from './contactList.module.css';
+import { getLoading } from 'redux/contacts/contacts-selectors';
 
 const ContactList = ({ filteredContacts, deleteContactBtn }) => {
+  const loading = useSelector(getLoading, shallowEqual);
+
   const partOfCode = filteredContacts.map(contact => {
     return (
       <li className={styles.listItem} key={contact.id}>
@@ -15,7 +20,7 @@ const ContactList = ({ filteredContacts, deleteContactBtn }) => {
         </button>
         <span className={styles.listDash}>&#8212;</span>
         <p>
-          {contact.name}: {contact.number}
+          {contact.name}: {contact.phone}
         </p>
       </li>
     );
@@ -23,6 +28,7 @@ const ContactList = ({ filteredContacts, deleteContactBtn }) => {
 
   return (
     <div className={styles.mainContainer}>
+      {!loading || <div className={styles.ldsDualRing}></div>}
       <ul>{partOfCode}</ul>
     </div>
   );
