@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
