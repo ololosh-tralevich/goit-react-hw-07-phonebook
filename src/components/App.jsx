@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import actions from '../redux/contacts/contacts-actions';
+// import actions from '../redux/contacts/contacts-actions';
 import operations from '../redux/contacts/contacts-operations';
 import { getContacts, getFilter } from '../redux/contacts/contacts-selectors';
 
@@ -36,7 +36,7 @@ export const App = () => {
   };
 
   const filteringContacts = useCallback(ev => {
-    dispatch(actions.filter(ev.target.value));
+    // dispatch(actions.filter(ev.target.value));
     // eslint-disable-next-line
   }, []);
 

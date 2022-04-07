@@ -1,37 +1,40 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import actions from './contacts-actions';
+import operations from './contacts-operations';
 
 const filter = createReducer('', {
-  [actions.filter]: (state, { payload }) => {
+  [operations.filter]: (state, { payload }) => {
     return (state = payload);
   },
 });
 
 const contacts = createReducer([], {
-  [actions.fetchSuccess]: (_, { payload }) => [...payload],
-  [actions.addSuccess]: (state, { payload }) => [...state, payload],
-  [actions.removeSuccess]: (state, { payload }) =>
+  [operations.fetchContacts.fulfilled]: (_, { payload }) => [...payload],
+  [operations.addContact.fulfilled]: (state, { payload }) => [
+    ...state,
+    payload,
+  ],
+  [operations.removeContact.fulfilled]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
 });
 
 const loading = createReducer(false, {
-  [actions.fetchRequest]: () => true,
-  [actions.fetchSuccess]: () => false,
-  [actions.fetchError]: () => false,
+  [operations.fetchContacts.pending]: () => true,
+  [operations.fetchContacts.fulfilled]: () => false,
+  [operations.fetchContacts.rejected]: () => false,
 
-  [actions.addRequest]: () => true,
-  [actions.addSuccess]: () => false,
-  [actions.addError]: () => false,
+  [operations.addContact.pending]: () => true,
+  [operations.addContact.fulfilled]: () => false,
+  [operations.addContact.rejected]: () => false,
 
-  [actions.removeRequest]: () => true,
-  [actions.removeSuccess]: () => false,
-  [actions.removeError]: () => false,
+  [operations.removeContact.pending]: () => true,
+  [operations.removeContact.fulfilled]: () => false,
+  [operations.removeContact.rejected]: () => false,
 });
 
 const error = createReducer(null, {
-  [actions.fetchError]: (_, { payload }) => payload,
-  [actions.addError]: (_, { payload }) => payload,
-  [actions.removeError]: (_, { payload }) => payload,
+  [operations.fetchContacts.rejected]: (_, { payload }) => payload,
+  [operations.addContact.rejected]: (_, { payload }) => payload,
+  [operations.removeContact.rejected]: (_, { payload }) => payload,
 });
 
 const contactsReducer = combineReducers({

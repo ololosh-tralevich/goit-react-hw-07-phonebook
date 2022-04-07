@@ -1,53 +1,57 @@
-import actions from './contacts-actions';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import services from '../../shared/services/fetchContacts';
 
-const fetchContacts = () => {
-  const func = async dispatch => {
-    dispatch(actions.fetchRequest());
+const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
     try {
       const result = await services.getContacts();
-      dispatch(actions.fetchSuccess(result));
-    } catch (error) {
-      dispatch(actions.fetchError(error));
+      return result;
+    } catch (err) {
+      console.log('error');
+      return rejectWithValue(err);
     }
-  };
-  return func;
-};
+  }
+);
 
-const addContact = contactData => {
-  const func = async (dispatch, getState) => {
-    const { contacts } = getState();
-    const { name, phone } = contactData;
-    const clone = contacts.contacts.find(
-      clone => clone.name === name || clone.phone === phone
-    );
-    if (clone) {
-      return alert(`${name} is already in your contacts`);
-    }
-
-    dispatch(actions.addRequest());
+const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (contactData, rejectWithValue) => {
     try {
       const newContact = await services.addContact(contactData);
-      dispatch(actions.addSuccess(newContact));
-    } catch (error) {
-      dispatch(actions.addError(error));
+      console.log('newCont', contactData);
+      return newContact;
+    } catch (err) {
+      console.log('error');
+      return rejectWithValue(err);
     }
-  };
-  return func;
-};
+  },
+  {
+    condition: (contactData, { getState }) => {
+      const { contacts } = getState();
+      const { name, phone } = contactData;
+      const clone = contacts.contacts.find(
+        clone => clone.name === name || clone.phone === phone
+      );
+      if (clone) {
+        return alert(`${name} is already in your contacts`);
+      }
+    },
+  }
+);
 
-const removeContact = contactId => {
-  const func = async dispatch => {
-    dispatch(actions.removeRequest());
+const removeContact = createAsyncThunk(
+  'contacts/removeContact',
+  async (contactId, rejectWithValue) => {
     try {
-      await services.removeContact(contactId);
-      dispatch(actions.removeSuccess(contactId));
-    } catch (error) {
-      dispatch(actions.removeError(error));
+      return await services.removeContact(contactId);
+    } catch (err) {
+      console.log('error');
+      return rejectWithValue(err);
     }
-  };
-  return func;
-};
+  }
+);
 
 const operations = {
   fetchContacts,
