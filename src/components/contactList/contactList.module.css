@@ -7,19 +7,18 @@
 }
 
 .listItem {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
 }
 
 .removeContactBtn {
-font-size: 14px;
+  font-size: 14px;
 }
 
 .listDash {
-    margin: 0 6px;
+  margin: 0 6px;
 }
-
 
 /* Loader Styles Below */
 .ldsDualRing {
@@ -28,13 +27,13 @@ font-size: 14px;
   height: 80px;
 }
 .ldsDualRing:after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 64px;
   height: 64px;
   border-radius: 50%;
   border: 6px solid rgb(0, 0, 0);
-  border-color: rgb(255, 213, 0) transparent rgb(81, 0, 255) transparent;
+  border-color: rgb(81, 0, 255) transparent rgb(255, 213, 0) transparent;
   animation: ldsDualRing 1.2s linear infinite;
 }
 @keyframes ldsDualRing {
