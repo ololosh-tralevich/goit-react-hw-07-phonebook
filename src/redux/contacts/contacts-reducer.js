@@ -1,8 +1,9 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
 import operations from './contacts-operations';
+import filterAction from './contacts-actions';
 
 const filter = createReducer('', {
-  [operations.filter]: (state, { payload }) => {
+  [filterAction]: (state, { payload }) => {
     return (state = payload);
   },
 });
