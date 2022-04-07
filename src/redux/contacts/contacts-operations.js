@@ -35,7 +35,8 @@ const addContact = createAsyncThunk(
         clone => clone.name === name || clone.phone === phone
       );
       if (clone) {
-        return alert(`${name} is already in your contacts`);
+        alert(`${name} is already in your contacts`);
+        return false;
       }
     },
   }
