@@ -18,7 +18,7 @@ const addContact = async data => {
 
 const removeContact = async contactId => {
   const { data: result } = await instance.delete(`/contacts/${contactId}`);
-  console.log('REMOVE:', result);
+  console.log('REMOVE:', result.id);
   return result.id;
 };
 
